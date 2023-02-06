@@ -1,0 +1,35 @@
+public class FretMaritime extends Fret{
+    
+     public FretMaritime(String vd,String va,int du,int di, TypeVehicule tpv){
+        super(vd,va,du,di,tpv);
+    }
+    public String toString(){
+        String res ="";
+        res = "\t" + "Fret Routier";
+        res += "\n"+"Villle départ : " + super.getVilleD() +"\n";
+        res += "\n"+"Ville arrivé : " + super.getVilleA()+"\n";
+        res += "\n"+"Distance : " + super.getDist()+"\n";
+        res += "\n"+"Durée : " + super.getDur()+"\n";
+        res += "\n"+"Transporté par : " + super.getV()+"\n";
+        for(Marchandise unLot : lesLots.keySet()){
+            res += lesLots.get(unLot);
+        }
+        res += "\n"+"Poid total : " + super.calculerPoidTotal()+"\n";
+        res += "\n"+"Volume total : " + super.calculerVolumeTotal()+"\n";
+        res += "\n"+"Prix du fret : " + calculerPrix()+"\n";
+        res += "\n"+"Empreinte carbone : " + calculerEmpreintCarbone()+"\n";
+        return res;
+    }
+    
+    public float calculerPrix(){
+         float prix;
+         prix = super.calculerVolumeTotal() * Tarif.MARITIME;
+         return prix;
+    }
+    
+    public float calculerEmpreintCarbone(){
+        float taux;
+        taux = super.getTauxConsoKm() * super.getDist() * FacteurEmission.MARITIME * (super.calculerVolumeTotal() / super.getVmax());
+        return taux;
+    }
+}

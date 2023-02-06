@@ -1,0 +1,41 @@
+import java.util.HashMap;
+
+public class FretRoutier extends Fret{
+    
+    public FretRoutier(String vd,String va,int du,int di, TypeVehicule tpv){
+        super(vd,va,du,di,tpv);
+    }
+    
+    @Override
+     public String toString(){
+        String res ="";
+        res = "Fret Routier";
+        res += "\n" + "Villle départ : " + super.getVilleD()+"\n";
+        res += "Ville arrivé : " + super.getVilleA()+"\n";
+        res += "Distance : " + super.getDist()+"\n";
+        res += "Durée : " + super.getDur()+"\n";
+        res += "Transporté par : " + super.getV() + " ";
+        for(Marchandise uneMarchandise : lesLots.keySet()){
+            res += lesLots.get(uneMarchandise).toString();
+            res += uneMarchandise.getLibelle() + " ";
+            res += uneMarchandise.getPreco() + "\n";
+        }
+        res += "Poid total : " + super.calculerPoidTotal()+"\n";
+        res += "Volume total : " + super.calculerVolumeTotal()+"\n";
+        res += "Prix du fret : " + calculerPrix()+"\n";
+        res += "Empreinte carbone : " + calculerEmpreintCarbone()+"\n";
+        return res;
+    }
+    @Override
+    public float calculerPrix(){
+         float prix;
+         prix = super.calculerVolumeTotal() * Tarif.ROUTIER;
+         return prix;
+    }
+    @Override
+    public float calculerEmpreintCarbone(){
+        float taux;
+        taux = super.getTauxConsoKm() * super.getDist() * FacteurEmission.ROUTIER * (super.calculerVolumeTotal() / super.getVmax());
+        return taux;
+    }
+}

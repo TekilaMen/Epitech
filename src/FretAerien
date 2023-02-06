@@ -1,0 +1,36 @@
+public class FretAerien extends Fret{
+    
+     public FretAerien(String vd,String va,int du,int di, TypeVehicule tpv){
+        super(vd,va,du,di,tpv);
+    }
+     
+     public String toString(){
+        String res ="";
+        res = "Fret Routier";
+        res += "Villle départ : " + super.getVilleD()+"\n";
+        res += "Ville arrivé : " + super.getVilleA()+"\n";
+        res += "Distance : " + super.getDist()+"\n";
+        res += "Durée : " + super.getDur()+"\n";
+        res += "Transporté par : " + super.getV()+"\n";
+        for(Marchandise unLot : lesLots.keySet()){
+            res += lesLots.get(unLot);
+        }
+        res += "Poid total : " + super.calculerPoidTotal()+"\n";
+        res += "Volume total : " + super.calculerVolumeTotal()+"\n";
+        res += "Prix du fret : " + calculerPrix()+"\n";
+        res += "Empreinte carbone : " + calculerEmpreintCarbone()+"\n";
+        return res;
+    }
+    
+    public float calculerPrix(){
+         float prix;
+         prix = super.calculerVolumeTotal() * Tarif.AERIEN;
+         return prix;
+    }
+    
+    public float calculerEmpreintCarbone(){
+        float taux;
+        taux = super.getTauxConsoKm() * super.getDist() * FacteurEmission.AERIEN * (super.calculerVolumeTotal() / super.getVmax());
+        return taux;
+    }
+}
